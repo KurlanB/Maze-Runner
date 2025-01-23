@@ -11,25 +11,30 @@ import org.apache.logging.log4j.Logger;
 
 public class Main {
 
+    //Initializing Apache tools
     private static final Logger logger = LogManager.getLogger();
     private static final Options options = new Options();
     private static final CommandLineParser parser = new DefaultParser();
 
     public static void main(String[] args) {
+        //Start of maze runner
         logger.info("** Starting Maze Runner");
         options.addOption("i", true, "Input file of maze selected");
 
         try {
+            //Parsing the command line arguments
             CommandLine cmd = parser.parse(options, args);
 
             if(!cmd.hasOption("i")){ 
                 throw new ParseException("/!\\ Could not find -i flag /!\\", 0);
             }
 
+            //Reading from maze file
             String filePath = cmd.getOptionValue("i");
-
             logger.info("**** Reading the maze from file " + filePath);
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            
+            //Constructing maze from file
             String line;
             while ((line = reader.readLine()) != null) {
                 for (int idx = 0; idx < line.length(); idx++) {
@@ -46,9 +51,14 @@ public class Main {
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
-        
+
+        //Continuation of maze runner
+
+        //Computing path
         logger.info("**** Computing path");
         logger.warn("PATH NOT COMPUTED");
+        
+        //End of maze runner
         logger.info("** End of MazeRunner");
     }
 }
