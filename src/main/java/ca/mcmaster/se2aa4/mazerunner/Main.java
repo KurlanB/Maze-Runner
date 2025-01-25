@@ -47,15 +47,15 @@ public class Main {
             //Computing path
             if(cmd.hasOption("p") && cmd.getOptionValue("p") != null){
                 logger.info("**** Verifying path");
-                String path = cmd.getOptionValue("p");
+                String path = cmd.getOptionValue("p").toUpperCase();
 
-                boolean isvalid = maze.checkPathWest(path); // OR maze.checkPathEast(path);
+                boolean isvalid = maze.checkPathWest(path) || maze.checkPathEast(path);
 
                 if(isvalid){
-                    logger.info("Path is valid");
+                    logger.info("*** Path is valid");
                     System.out.println("corrrect path");
                 } else {
-                    logger.info("Path is invalid");
+                    logger.info("*** Path is invalid");
                     System.out.println("incorrect path");
                 }
 

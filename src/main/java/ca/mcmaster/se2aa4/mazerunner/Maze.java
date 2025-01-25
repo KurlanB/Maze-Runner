@@ -144,8 +144,39 @@ public class Maze {
      * @return True if the path is correct, false otherwise.
      */
     public boolean checkPathEast(String path){
-        // TODO: Implementation to check if the path given is correct from the east
-        return false;
+        logger.debug("East Check");
+        Coordinate check = new Coordinate(exit.getX(), exit.getY());
+        Orientation orientation = Orientation.WEST;
+        
+        for(Character c : path.toCharArray()){
+            if(c == ' '){
+                continue;
+            }
+
+            logger.info(c);
+
+            switch (c) {
+                case 'R':
+                    orientation = orientation.turnRight();
+                    break;
+                case 'L':
+                    orientation = orientation.turnLeft();
+                    break;
+                case 'F':
+                    check.move(orientation);
+
+                    if(check.getX() < 0 || check.getX() >= getWidth() || check.getY() < 0 || check.getY() >= getLength()){
+                        return false;
+                    }
+
+                    if(!isOpen(check)){
+                        return false;
+                    }
+                    break;                    
+            }
+        }
+
+        return check.getX() == entry.getX() && check.getY() == entry.getY();
     }
 
     /**
@@ -155,10 +186,17 @@ public class Maze {
      * @return True if the path is correct, false otherwise.
      */
     public boolean checkPathWest(String path){
+        logger.debug("West Check");
         Coordinate check = new Coordinate(entry.getX(), entry.getY());
         Orientation orientation = Orientation.EAST;
 
         for(Character c : path.toCharArray()){
+            if(c == ' '){
+                continue;
+            }
+
+            logger.info(c);
+
             switch (c) {
                 case 'R':
                     orientation = orientation.turnRight();
@@ -175,10 +213,10 @@ public class Maze {
 
                     if(!isOpen(check)){
                         return false;
-                    }                    
+                    }
+                    break;                    
             }
         }
-
         return check.getX() == exit.getX() && check.getY() == exit.getY();
     }
 }
