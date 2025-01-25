@@ -1,9 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -19,45 +15,63 @@ public class Main {
     public static void main(String[] args) {
         //Start of maze runner
         logger.info("** Starting Maze Runner");
+        
+        //Starting the maze runner
+        start(args);
+        
+        //End of maze runner
+        logger.info("** End of MazeRunner");
+    }
 
+    /**
+     * Starts the maze runner with the given command line arguments.
+     * 
+     * @param args The command line arguments.
+     */
+    public static void start(String[] args){
         //Parsing options
         Options options = new Options();
         options.addOption("i", true, "Input file of maze selected");
+        options.addOption("p", false, "Path input");
 
         CommandLineParser parser = new DefaultParser();
 
         try {
             //Parsing the command line arguments
             CommandLine cmd = parser.parse(options, args);
-
+            
             //Reading from maze file
             String filePath = cmd.getOptionValue("i");
-            logger.info("**** Reading the maze from file " + filePath);
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
-            
-            //Constructing maze from file
-            String line;
-            while ((line = reader.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        logger.debug("WALL ");
-                    } else if (line.charAt(idx) == ' ') {
-                        logger.debug("PASS ");
-                    }
+            Maze maze = new Maze(filePath); 
+
+            //Computing path
+            if(cmd.hasOption("p") && cmd.getOptionValue("p") != null){
+                logger.info("**** Verifying path");
+                String path = cmd.getOptionValue("p");
+
+                boolean isvalid = maze.checkPathWest(path); // OR maze.checkPathEast(path);
+
+                if(isvalid){
+                    logger.info("Path is valid");
+                    System.out.println("corrrect path");
+                } else {
+                    logger.info("Path is invalid");
+                    System.out.println("incorrrect path");
                 }
-                logger.debug(System.lineSeparator());
+
+            } else if(cmd.hasOption("p") && cmd.getOptionValue("p") == null){
+                logger.warn("PATH NOT COMPUTED");
+                System.out.println("No path was found");
+
+            } else {
+                logger.info("**** Computing path");
+                MazeRunner runner = new RightHandRule();
+                String pathFound = runner.escapeMaze(maze);
+                System.out.println("Path: " + pathFound);
             }
+            
         } catch(Exception e) {
-            logger.error("/!\\ An error has occured /!\\");
+            logger.error("/!\\ Error during command line read /!\\");
         }
-
-        //Continuation of maze runner
-
-        //Computing path
-        logger.info("**** Computing path");
-        logger.warn("PATH NOT COMPUTED");
-        
-        //End of maze runner
-        logger.info("** End of MazeRunner");
     }
 }
