@@ -43,7 +43,20 @@ public class Coordinate {
      * @param orientation The direction to move the coordinate.
      */
     public void move(Orientation orientation){
-        // TODO: Implementation to move the coordinate based on the orientation
+        switch(orientation){
+            case NORTH:
+                cordY--;
+                break;
+            case SOUTH:
+                cordY++;
+                break;
+            case EAST:
+                cordX++;
+                break;
+            case WEST:
+                cordX--;
+                break;
+        }
     }
 }
 

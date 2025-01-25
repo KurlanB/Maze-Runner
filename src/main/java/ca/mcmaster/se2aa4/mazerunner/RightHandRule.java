@@ -14,6 +14,7 @@ public class RightHandRule implements MazeRunner{
      */
     public String escapeMaze(Maze maze) {
         // TODO: Implementation of the right-hand rule algorithm to escape the maze
+        return "";
     }
 
 }

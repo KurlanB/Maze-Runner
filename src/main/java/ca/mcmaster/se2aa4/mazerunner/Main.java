@@ -71,7 +71,7 @@ public class Main {
             }
             
         } catch(Exception e) {
-            logger.error("/!\\ Error during command line read /!\\");
+            logger.error("Error: " + e.getMessage());
         }
     }
 }

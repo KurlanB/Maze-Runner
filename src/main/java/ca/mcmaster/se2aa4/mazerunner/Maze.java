@@ -18,35 +18,45 @@ public class Maze {
     // 2d ArrayList of boolean to store the maze layout, where false represents a wall 
     private final ArrayList<ArrayList<Boolean>> maze = new ArrayList<ArrayList<Boolean>>();
 
-    private Coordinate entry;
+    private final Coordinate entry;
     
-    private Coordinate exit;
+    private final Coordinate exit;
 
     /**
      * Constructor to initialize the maze from a file.
      * 
      * @param filePath The path to the maze file.
      */
-    public Maze(String filePath) {
-        try {
-            logger.info("**** Reading the maze from file " + filePath);
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
-            
-            //Constructing maze from file
-            String line;
-            while ((line = reader.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        logger.debug("WALL ");
-                    } else if (line.charAt(idx) == ' ') {
-                        logger.debug("PASS ");
-                    }
+    public Maze(String filePath) throws Exception {
+        logger.info("**** Reading the maze from file " + filePath);
+        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        
+        //Constructing maze from file
+        String line;
+        while ((line = reader.readLine()) != null) {
+            ArrayList<Boolean> row = new ArrayList<>();
+
+            logger.debug("Reading lines of maze");
+            for (int idx = 0; idx < line.length(); idx++) {
+                if (line.charAt(idx) == '#') {
+                    logger.debug("WALL ");
+                    row.add(false);
+                } else if (line.charAt(idx) == ' ') {
+                    logger.debug("PASS ");
+                    row.add(true);
                 }
-                logger.debug(System.lineSeparator());
             }
-        } catch(Exception e) {
-            logger.error("/!\\ Could not read maze from file /!\\");
+            logger.debug(System.lineSeparator());
+            this.maze.add(row);
         }
+        logger.info("**** Finding entry and exit points");
+
+        this.entry = findEntry();
+        this.exit = findExit();
+        
+        logger.info("**** Found entry and exit points");
+
+        reader.close();
     }
 
     /**
@@ -54,8 +64,15 @@ public class Maze {
      * 
      * @return The coordinate of the entry point.
      */
-    public Coordinate findEntry(){
-        // TODO: Implementation to find the entry point of the maze
+    public Coordinate findEntry() throws Exception{
+        for(int i = 0; i < getLength(); i++){
+            Coordinate current = new Coordinate(0, i);
+            if(isOpen(current)){
+                return current;
+            }
+        }
+
+        throw new Exception("No entry point found");
     }
 
     /**
@@ -64,7 +81,7 @@ public class Maze {
      * @return The coordinate of the entry point.
      */
     public Coordinate getEntry() {
-        return entry;
+        return this.entry;
     }
 
     /**
@@ -72,8 +89,15 @@ public class Maze {
      * 
      * @return The coordinate of the exit point.
      */
-    public Coordinate findExit(){
-        // TODO: Implementation to find the exit point of the maze
+    public Coordinate findExit() throws Exception{
+        for(int i = 0; i < getLength(); i++){
+            Coordinate current = new Coordinate(getWidth() - 1, i);
+            if(isOpen(current)){
+                return current;
+            }
+        }
+
+        throw new Exception("No exit point found");
     }
 
     /**
@@ -82,7 +106,7 @@ public class Maze {
      * @return The coordinate of the exit point.
      */
     public Coordinate getExit() {
-        return exit;
+        return this.exit;
     }
 
     /**
@@ -91,7 +115,7 @@ public class Maze {
      * @return The length of the maze.
      */
     public int getLength(){
-        // TODO: Implementation to get the length of the maze
+        return maze.size();
     }
 
     /**
@@ -100,7 +124,7 @@ public class Maze {
      * @return The width of the maze.
      */
     public int getWidth(){
-        // TODO: Implementation to get the width of the maze
+        return maze.get(0).size();
     }
 
     /**
@@ -110,7 +134,7 @@ public class Maze {
      * @return True if the coordinate is open, false otherwise.
      */
     public boolean isOpen(Coordinate c) {
-        // TODO: Implementation to check if the coordinate is open
+        return maze.get(c.getY()).get(c.getX());
     }
 
     /**
@@ -121,6 +145,7 @@ public class Maze {
      */
     public boolean checkPathEast(String path){
         // TODO: Implementation to check if the path given is correct from the east
+        return false;
     }
 
     /**
@@ -130,6 +155,30 @@ public class Maze {
      * @return True if the path is correct, false otherwise.
      */
     public boolean checkPathWest(String path){
-        // TODO: Implementation to check if the path given is correct from the west
+        Coordinate check = new Coordinate(entry.getX(), entry.getY());
+        Orientation orientation = Orientation.EAST;
+
+        for(Character c : path.toCharArray()){
+            switch (c) {
+                case 'R':
+                    orientation = orientation.turnRight();
+                    break;
+                case 'L':
+                    orientation = orientation.turnLeft();
+                    break;
+                case 'F':    
+                    check.move(orientation);
+
+                    if(!isOpen(check)){
+                        return false;
+                    }
+
+                    if(check.getX() < 0 || check.getX() >= getWidth() || check.getY() < 0 || check.getY() >= getLength()){
+                        return false;
+                    }
+            }
+        }
+
+        return check.getX() == exit.getX() && check.getY() == exit.getY();
     }
 }
