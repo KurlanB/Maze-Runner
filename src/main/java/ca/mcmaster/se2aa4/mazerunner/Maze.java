@@ -169,13 +169,13 @@ public class Maze {
                 case 'F':    
                     check.move(orientation);
 
-                    if(!isOpen(check)){
-                        return false;
-                    }
-
                     if(check.getX() < 0 || check.getX() >= getWidth() || check.getY() < 0 || check.getY() >= getLength()){
                         return false;
                     }
+
+                    if(!isOpen(check)){
+                        return false;
+                    }                    
             }
         }
 

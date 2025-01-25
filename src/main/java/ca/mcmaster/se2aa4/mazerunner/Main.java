@@ -32,8 +32,8 @@ public class Main {
         //Parsing options
         Options options = new Options();
         options.addOption("i", true, "Input file of maze selected");
-        options.addOption("p", false, "Path input");
-
+        options.addOption("p", true, "Path input");
+    
         CommandLineParser parser = new DefaultParser();
 
         try {
@@ -56,7 +56,7 @@ public class Main {
                     System.out.println("corrrect path");
                 } else {
                     logger.info("Path is invalid");
-                    System.out.println("incorrrect path");
+                    System.out.println("incorrect path");
                 }
 
             } else if(cmd.hasOption("p") && cmd.getOptionValue("p") == null){
