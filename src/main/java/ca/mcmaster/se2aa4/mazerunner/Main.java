@@ -1,5 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -32,7 +33,12 @@ public class Main {
         //Parsing options
         Options options = new Options();
         options.addOption("i", true, "Input file of maze selected");
-        options.addOption("p", true, "Path input");
+        Option optionP = Option.builder("p")
+                .optionalArg(true)
+                .desc("Path input")
+                .numberOfArgs(1)
+                .build();
+        options.addOption(optionP);
     
         CommandLineParser parser = new DefaultParser();
 
