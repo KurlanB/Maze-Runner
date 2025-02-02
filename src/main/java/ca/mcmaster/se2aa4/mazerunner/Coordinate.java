@@ -43,19 +43,14 @@ public class Coordinate {
      * @param orientation The direction to move the coordinate.
      */
     public void move(Orientation orientation){
-        switch(orientation){
-            case NORTH:
-                cordY--;
-                break;
-            case SOUTH:
-                cordY++;
-                break;
-            case EAST:
-                cordX++;
-                break;
-            case WEST:
-                cordX--;
-                break;
+        if(orientation == Orientation.NORTH){
+            cordY--;
+        } else if(orientation == Orientation.SOUTH){
+            cordY++;
+        } else if(orientation == Orientation.EAST){
+            cordX++;
+        } else if(orientation == Orientation.WEST){
+            cordX--;
         }
     }
 }

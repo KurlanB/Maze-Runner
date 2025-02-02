@@ -155,25 +155,22 @@ public class Maze {
 
             logger.info(c);
 
-            switch (c) {
-                case 'R':
-                    orientation = orientation.turnRight();
-                    break;
-                case 'L':
-                    orientation = orientation.turnLeft();
-                    break;
-                case 'F':
-                    check.move(orientation);
+            
+            if(c == 'R'){
+                orientation = orientation.turnRight();
+            } else if(c == 'L'){
+                orientation = orientation.turnLeft();
+            } else if(c == 'F'){
+                check.move(orientation);
 
-                    if(check.getX() < 0 || check.getX() >= getWidth() || check.getY() < 0 || check.getY() >= getLength()){
-                        return false;
-                    }
+                if(check.getX() < 0 || check.getX() >= getWidth() || check.getY() < 0 || check.getY() >= getLength()){
+                    return false;
+                }
 
-                    if(!isOpen(check)){
-                        return false;
-                    }
-                    break;                    
-            }
+                if(!isOpen(check)){
+                    return false;
+                }
+            }          
         }
 
         return check.getX() == entry.getX() && check.getY() == entry.getY();
@@ -197,25 +194,21 @@ public class Maze {
 
             logger.info(c);
 
-            switch (c) {
-                case 'R':
-                    orientation = orientation.turnRight();
-                    break;
-                case 'L':
-                    orientation = orientation.turnLeft();
-                    break;
-                case 'F':    
-                    check.move(orientation);
+            if(c == 'R'){
+                orientation = orientation.turnRight();
+            }else if(c == 'L'){
+                orientation = orientation.turnLeft();
+            }else if(c == 'F'){  
+                check.move(orientation);
 
-                    if(check.getX() < 0 || check.getX() >= getWidth() || check.getY() < 0 || check.getY() >= getLength()){
-                        return false;
-                    }
+                if(check.getX() < 0 || check.getX() >= getWidth() || check.getY() < 0 || check.getY() >= getLength()){
+                    return false;
+                }
 
-                    if(!isOpen(check)){
-                        return false;
-                    }
-                    break;                    
-            }
+                if(!isOpen(check)){
+                    return false;
+                }
+            }                  
         }
         return check.getX() == exit.getX() && check.getY() == exit.getY();
     }
