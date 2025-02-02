@@ -1,11 +1,15 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 /**
  * The RightHandRule class implements the MazeRunner interface and provides
  * an algorithm to escape the maze using the right-hand rule.
  */
 public class RightHandRule implements MazeRunner{
     
+    private static final Logger logger = LogManager.getLogger();
+
     /**
      * Escapes the maze using the right-hand rule algorithm.
      * 
@@ -24,11 +28,15 @@ public class RightHandRule implements MazeRunner{
         Orientation orientation = Orientation.EAST;
 
         while (current.getX() != maze.getExit().getX() || current.getY() != maze.getExit().getY()){
+            logger.debug("Current: (" + current.getX() + ", " + current.getY() + ")");
             Coordinate rightHand = new Coordinate(current.getX(), current.getY());
             rightHand.move(orientation.turnRight());
+            logger.debug("Right: (" + rightHand.getX() + ", " + rightHand.getY() + ")");
+
 
             Coordinate front = new Coordinate(current.getX(), current.getY());
             front.move(orientation);
+            logger.debug("Front: (" + front.getX() + ", " + front.getY() + ")");
 
             if(!maze.isOpen(rightHand)){
                 if(maze.isOpen(front)){
@@ -44,7 +52,10 @@ public class RightHandRule implements MazeRunner{
                 path.append('R');
                 path.append('F');
             }
+
+            logger.debug(path.toString());
         }
+        
         return path.toString();
     }
 }

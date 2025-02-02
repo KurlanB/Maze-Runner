@@ -24,6 +24,8 @@ public class Main {
         logger.info("** End of MazeRunner");
     }
 
+
+    
     /**
      * Starts the maze runner with the given command line arguments.
      * 
