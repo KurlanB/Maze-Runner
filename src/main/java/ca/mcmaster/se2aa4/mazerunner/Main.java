@@ -61,17 +61,18 @@ public class Main {
 
             } else if(cmd.hasOption("p") && cmd.getOptionValue("p") == null){
                 logger.warn("PATH NOT COMPUTED");
-                System.out.println("No path was found");
+                System.out.println("No path was inputted");
 
             } else {
                 logger.info("**** Computing path");
                 MazeRunner runner = new RightHandRule();
                 String pathFound = runner.escapeMaze(maze);
-                System.out.println("Path: " + pathFound);
+                System.out.println(pathFound);
             }
             
         } catch(Exception e) {
             logger.error("Error: " + e.getMessage());
+            System.out.println("Maze not valid");
         }
     }
 }

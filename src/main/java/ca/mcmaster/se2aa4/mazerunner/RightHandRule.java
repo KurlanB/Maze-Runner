@@ -13,8 +13,38 @@ public class RightHandRule implements MazeRunner{
      * @return A string representing the path taken to escape the maze.
      */
     public String escapeMaze(Maze maze) {
-        
-        return "";
-    }
+        /*  Right | Front | ACTION
+         *  PASS  | ANY   | TURN RIGHT and MOVE FORWARD
+         *  WALL  | PASS  | MOVE FORWARD
+         *  WALL  | WALL  | TURN LEFT
+         */
 
+        StringBuilder path = new StringBuilder();
+        Coordinate current = maze.getEntry();
+        Orientation orientation = Orientation.EAST;
+
+        while (current.getX() != maze.getExit().getX() || current.getY() != maze.getExit().getY()){
+            Coordinate rightHand = new Coordinate(current.getX(), current.getY());
+            rightHand.move(orientation.turnRight());
+
+            Coordinate front = new Coordinate(current.getX(), current.getY());
+            front.move(orientation);
+
+            if(!maze.isOpen(rightHand)){
+                if(maze.isOpen(front)){
+                    path.append('F');
+                    current.move(orientation);
+                } else {
+                    orientation = orientation.turnLeft();
+                    path.append('L');
+                }
+            } else {
+                orientation = orientation.turnRight();
+                current.move(orientation);
+                path.append('R');
+                path.append('F');
+            }
+        }
+        return path.toString();
+    }
 }
