@@ -156,16 +156,8 @@ public class Maze {
     public boolean checkPathEast(String path){
         logger.debug("East Check");
         Coordinate check = new Coordinate(exit.getX(), exit.getY(), Orientation.WEST);
-        
-        for(Character c : path.toCharArray()){
-            logger.debug(c);
-            
-            if(!movementCheck(c, check)){
-                return false;
-            }          
-        }
 
-        return check.getX() == entry.getX() && check.getY() == entry.getY();
+        return movementCheck(path, check) && (check.getX() == entry.getX() && check.getY() == entry.getY());
     }
 
     /**
@@ -178,15 +170,7 @@ public class Maze {
         logger.debug("West Check");
         Coordinate check = new Coordinate(entry.getX(), entry.getY(), Orientation.EAST);
 
-        for(Character c : path.toCharArray()){
-            logger.info(c);
-
-            if(!movementCheck(c, check)){
-                return false;
-            }                 
-        }
-
-        return check.getX() == exit.getX() && check.getY() == exit.getY();
+        return movementCheck(path, check) && (check.getX() == exit.getX() && check.getY() == exit.getY());
     }
 
     /**
@@ -197,23 +181,27 @@ public class Maze {
      * @param orientation The orientation to check.
      * @return True if the movement is valid, false otherwise.
      */
-    public boolean movementCheck(char c, Coordinate cords){
-        if(c == 'R'){
-            cords.turnRight();
-        }else if(c == 'L'){
-            cords.turnLeft();
-        }else if(c == 'F'){  
-            cords.moveForward();
+    public boolean movementCheck(String path, Coordinate cords){
+        
+        for(Character c : path.toCharArray()){
+            logger.debug(c);
 
-            if(cords.getX() < 0 || cords.getX() >= getWidth() || cords.getY() < 0 || cords.getY() >= getLength()){
-                System.out.println("Out of bounds");
-                return false;
-            }
-
-            if(!isOpen(cords)){
-                System.out.println(cords.getX() + " " + cords.getY());
-                return false;
-            }
+            if(c == 'R'){
+                cords.turnRight();
+            }else if(c == 'L'){
+                cords.turnLeft();
+            }else if(c == 'F'){  
+                cords.moveForward();
+    
+                if(cords.getX() < 0 || cords.getX() >= getWidth() || cords.getY() < 0 || cords.getY() >= getLength()){
+                    System.out.println("Out of bounds");
+                    return false;
+                }
+    
+                if(!isOpen(cords)){
+                    return false;
+                }
+            }         
         }
         return true;
     }
