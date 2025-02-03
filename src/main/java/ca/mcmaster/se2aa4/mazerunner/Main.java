@@ -75,7 +75,7 @@ public class Main {
                 logger.info("**** Computing path");
                 MazeRunner runner = new RightHandRule();
                 String pathFound = runner.escapeMaze(maze);
-                System.out.println(pathFound);
+                System.out.println(cleanPrint(pathFound));
             }
             
         } catch(Exception e) {
@@ -102,6 +102,39 @@ public class Main {
         }
 
         logger.debug(cleanPath.toString());
+        return cleanPath.toString();
+    }
+
+    public static String cleanPrint(String solvedPath){
+        StringBuilder cleanPath = new StringBuilder();
+        char[] charPath = solvedPath.toCharArray();
+        
+        for(int i = 0; i < charPath.length; i++){
+            if(i == charPath.length - 1){
+                cleanPath.append(charPath[i]);
+            } else {
+                if(charPath[i] == charPath[i+1]){
+                    int count = 1;
+                    char commonChar = charPath[i];
+
+                    while(i < charPath.length - 1){
+                        if(charPath[i+1] != commonChar){
+                            break;
+                        } else if(charPath[i+1] == commonChar){
+                            count++;
+                            i++;
+                        }
+                    }
+                    
+                    cleanPath.append(count + "" + commonChar + " ");
+                } else {
+                    cleanPath.append(charPath[i] + " ");
+                }
+            } 
+            logger.debug(cleanPath.toString());
+            logger.debug(i);
+        }
+        
         return cleanPath.toString();
     }
 }
