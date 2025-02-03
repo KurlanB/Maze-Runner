@@ -7,6 +7,7 @@ package ca.mcmaster.se2aa4.mazerunner;
 public class Coordinate {
     private int cordX;
     private int cordY;
+    private Orientation orientation;
 
     /**
      * Constructor to initialize the coordinate with given x and y values.
@@ -15,8 +16,22 @@ public class Coordinate {
      * @param y The y coordinate.
      */
     public Coordinate(int x, int y) {
-        cordX = x;
-        cordY = y;
+        this.cordX = x;
+        this.cordY = y;
+        this.orientation = Orientation.EAST;
+    }
+
+    /**
+     * Constructor to initialize the coordinate with given x and y values.
+     * 
+     * @param x The x coordinate.
+     * @param y The y coordinate.
+     * @param orientation The orientation of the coordinate.
+     */
+    public Coordinate(int x, int y, Orientation orientation) {
+        this.cordX = x;
+        this.cordY = y;
+        this.orientation = orientation;
     }
 
     /**
@@ -38,20 +53,48 @@ public class Coordinate {
     }
 
     /**
+     * Gets the orientation of the coordinate.
+     * 
+     * @return The orientation of the coordinate.
+     */
+    public Orientation getOrientation() {
+        return orientation;
+    }
+
+    /**
      * Moves the coordinate forward based on the orientation.
      * 
      * @param orientation The direction to move the coordinate.
      */
-    public void move(Orientation orientation){
-        if(orientation == Orientation.NORTH){
-            cordY--;
-        } else if(orientation == Orientation.SOUTH){
-            cordY++;
-        } else if(orientation == Orientation.EAST){
-            cordX++;
-        } else if(orientation == Orientation.WEST){
-            cordX--;
+    public void moveForward(){
+        switch(orientation){
+            case NORTH:
+                cordY--;
+                break;
+            case SOUTH:
+                cordY++;
+                break;
+            case EAST:
+                cordX++;
+                break;
+            case WEST:
+                cordX--;
+                break;
         }
     }
+
+    /**
+     * Turns the coordinate to the right.
+     */
+    public void turnRight(){
+        this.orientation = orientation.turnRight();
+    }
+
+    /**
+     * Turns the coordinate to the left.
+     */
+    public void turnLeft(){
+        this.orientation = orientation.turnLeft();
+    }   
 }
 

@@ -17,38 +17,43 @@ public class RightHandRule implements MazeRunner{
      * @return A string representing the path taken to escape the maze.
      */
     public String escapeMaze(Maze maze) {
-        /*  Right | Front | ACTION
+        /*  Truth Table
+         *  Right | Front | ACTION
          *  PASS  | ANY   | TURN RIGHT and MOVE FORWARD
          *  WALL  | PASS  | MOVE FORWARD
          *  WALL  | WALL  | TURN LEFT
          */
 
+        // Initialize the Maze runner
         StringBuilder path = new StringBuilder();
         Coordinate current = maze.getEntry();
-        Orientation orientation = Orientation.EAST;
 
+        // While the runner has not reached the exit
         while (current.getX() != maze.getExit().getX() || current.getY() != maze.getExit().getY()){
             logger.debug("Current: (" + current.getX() + ", " + current.getY() + ")");
-            Coordinate rightHand = new Coordinate(current.getX(), current.getY());
-            rightHand.move(orientation.turnRight());
+            
+            // Check the right hand side of the runner
+            Coordinate rightHand = new Coordinate(current.getX(), current.getY(), current.getOrientation().turnRight());
+            rightHand.moveForward();
             logger.debug("Right: (" + rightHand.getX() + ", " + rightHand.getY() + ")");
 
-
-            Coordinate front = new Coordinate(current.getX(), current.getY());
-            front.move(orientation);
+            // Check the front of the runner
+            Coordinate front = new Coordinate(current.getX(), current.getY(), current.getOrientation());
+            front.moveForward();
             logger.debug("Front: (" + front.getX() + ", " + front.getY() + ")");
 
+            // Right Hand algorithm from truth table
             if(!maze.isOpen(rightHand)){
                 if(maze.isOpen(front)){
                     path.append('F');
-                    current.move(orientation);
+                    current.moveForward();
                 } else {
-                    orientation = orientation.turnLeft();
+                    current.turnLeft();
                     path.append('L');
                 }
             } else {
-                orientation = orientation.turnRight();
-                current.move(orientation);
+                current.turnRight();
+                current.moveForward();
                 path.append('R');
                 path.append('F');
             }
