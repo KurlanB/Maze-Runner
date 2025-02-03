@@ -138,6 +138,16 @@ public class Maze {
     }
 
     /**
+     * Checks if the path given is correct.
+     * 
+     * @param path The path to check.
+     * @return True if the path is correct, false otherwise.
+     */
+    public boolean checkPath(String path){
+        return checkPathEast(path) || checkPathWest(path);
+    }
+
+    /**
      * Checks if the path given is correct from the east.
      * 
      * @param path The path to check.
@@ -149,12 +159,7 @@ public class Maze {
         Orientation orientation = Orientation.WEST;
         
         for(Character c : path.toCharArray()){
-            if(c == ' '){
-                continue;
-            }
-
-            logger.info(c);
-
+            logger.debug(c);
             
             if(c == 'R'){
                 orientation = orientation.turnRight();
@@ -188,11 +193,7 @@ public class Maze {
         Orientation orientation = Orientation.EAST;
 
         for(Character c : path.toCharArray()){
-            if(c == ' '){
-                continue;
-            }
-
-            logger.info(c);
+            logger.debug(c);
 
             if(c == 'R'){
                 orientation = orientation.turnRight();

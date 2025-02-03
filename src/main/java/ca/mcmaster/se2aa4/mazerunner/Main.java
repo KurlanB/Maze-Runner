@@ -57,7 +57,7 @@ public class Main {
                 logger.info("**** Verifying path");
                 String path = cmd.getOptionValue("p");
 
-                boolean isvalid = maze.checkPathWest(cleanRead(path)) || maze.checkPathEast(cleanRead(path));
+                boolean isvalid = maze.checkPath(cleanRead(path));
 
                 if(isvalid){
                     logger.info("*** Path is valid");
@@ -100,6 +100,8 @@ public class Main {
                 cleanPath.append(charPath[i]);
             }
         }
+
+        logger.debug(cleanPath.toString());
         return cleanPath.toString();
     }
 }
