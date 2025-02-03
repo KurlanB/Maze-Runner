@@ -25,7 +25,7 @@ public class Main {
     }
 
 
-    
+
     /**
      * Starts the maze runner with the given command line arguments.
      * 
@@ -55,9 +55,9 @@ public class Main {
             //Computing path
             if(cmd.hasOption("p") && cmd.getOptionValue("p") != null){
                 logger.info("**** Verifying path");
-                String path = cmd.getOptionValue("p").toUpperCase();
+                String path = cmd.getOptionValue("p");
 
-                boolean isvalid = maze.checkPathWest(path) || maze.checkPathEast(path);
+                boolean isvalid = maze.checkPathWest(cleanRead(path)) || maze.checkPathEast(cleanRead(path));
 
                 if(isvalid){
                     logger.info("*** Path is valid");
@@ -82,5 +82,24 @@ public class Main {
             logger.error("Error: " + e.getMessage());
             System.out.println("Maze not valid");
         }
+    }
+
+    public static String cleanRead(String path){
+        StringBuilder cleanPath = new StringBuilder();
+        char[] charPath = path.toUpperCase().replaceAll(" ", "").toCharArray();
+        
+        for(int i = 0; i < charPath.length; i++){
+            if(i == charPath.length - 1){
+                cleanPath.append(charPath[i]);
+            } else if(Character.isLetter(charPath[i+1]) && Character.isDigit(charPath[i])){
+                for(int j = 0; j < Character.getNumericValue(charPath[i]); j++){
+                    cleanPath.append(charPath[i+1]);
+                }
+                i++;
+            } else {
+                cleanPath.append(charPath[i]);
+            }
+        }
+        return cleanPath.toString();
     }
 }
