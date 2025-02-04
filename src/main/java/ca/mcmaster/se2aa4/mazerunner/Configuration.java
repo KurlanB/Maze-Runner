@@ -101,6 +101,17 @@ public class Configuration {
         for(int i = 0; i < charPath.length; i++){
             if(i == charPath.length - 1){
                 cleanPath.append(charPath[i]);
+            } else if(Character.isDigit(charPath[i]) && Character.isDigit(charPath[i+1])){
+                StringBuilder number = new StringBuilder();
+
+                while(Character.isDigit(charPath[i])){
+                    number.append(charPath[i]);
+                    i++;
+                }
+
+                for(int j = 0; j < Integer.parseInt(number.toString()); j++){
+                    cleanPath.append(charPath[i]);
+                }
             } else if(Character.isLetter(charPath[i+1]) && Character.isDigit(charPath[i])){
                 for(int j = 0; j < Character.getNumericValue(charPath[i]); j++){
                     cleanPath.append(charPath[i+1]);

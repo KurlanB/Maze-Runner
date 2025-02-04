@@ -147,6 +147,15 @@ public class Maze {
         return checkPathBoth(path, this.exit, this.entry, Orientation.WEST) || checkPathBoth(path, this.entry, this.exit, Orientation.EAST);
     }
 
+    /**
+     * Checks if the path given is correct.
+     * 
+     * @param path The path to check.
+     * @param start The start coordinate.
+     * @param end The end coordinate.
+     * @param orientation The orientation of the start coordinate.
+     * @return True if the path is correct, false otherwise.
+     */
     public boolean checkPathBoth(String path, Coordinate start, Coordinate end, Orientation orientation){
         logger.debug("Check Path");
         Coordinate check = new Coordinate(start.getX(), start.getY(), orientation);
