@@ -144,33 +144,14 @@ public class Maze {
      * @return True if the path is correct, false otherwise.
      */
     public boolean checkPath(String path){
-        return checkPathEast(path) || checkPathWest(path);
+        return checkPathBoth(path, this.exit, this.entry, Orientation.WEST) || checkPathBoth(path, this.entry, this.exit, Orientation.EAST);
     }
 
-    /**
-     * Checks if the path given is correct from the east.
-     * 
-     * @param path The path to check.
-     * @return True if the path is correct, false otherwise.
-     */
-    public boolean checkPathEast(String path){
-        logger.debug("East Check");
-        Coordinate check = new Coordinate(exit.getX(), exit.getY(), Orientation.WEST);
+    public boolean checkPathBoth(String path, Coordinate start, Coordinate end, Orientation orientation){
+        logger.debug("Check Path");
+        Coordinate check = new Coordinate(start.getX(), start.getY(), orientation);
 
-        return movementCheck(path, check) && (check.getX() == entry.getX() && check.getY() == entry.getY());
-    }
-
-    /**
-     * Checks if the path given is correct from the west.
-     * 
-     * @param path The path to check.
-     * @return True if the path is correct, false otherwise.
-     */
-    public boolean checkPathWest(String path){
-        logger.debug("West Check");
-        Coordinate check = new Coordinate(entry.getX(), entry.getY(), Orientation.EAST);
-
-        return movementCheck(path, check) && (check.getX() == exit.getX() && check.getY() == exit.getY());
+        return movementCheck(path, check) && (check.getX() == end.getX() && check.getY() == end.getY());
     }
 
     /**
@@ -182,7 +163,6 @@ public class Maze {
      * @return True if the movement is valid, false otherwise.
      */
     public boolean movementCheck(String path, Coordinate cords){
-        
         for(Character c : path.toCharArray()){
             logger.debug(c);
 
