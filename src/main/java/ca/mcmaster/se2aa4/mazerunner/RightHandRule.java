@@ -25,6 +25,7 @@ public class RightHandRule implements MazeRunner{
          */
 
         // Initialize the Maze runner
+        logger.info("**** Start running through the maze");
         StringBuilder path = new StringBuilder();
         Coordinate current = maze.getEntry();
 
@@ -45,15 +46,22 @@ public class RightHandRule implements MazeRunner{
             // Right Hand algorithm from truth table
             if(!maze.isOpen(rightHand)){
                 if(maze.isOpen(front)){
+                    logger.debug("Forward");
                     path.append('F');
+
                     current.moveForward();
                 } else {
+                    logger.debug("Left");
                     current.turnLeft();
+
                     path.append('L');
                 }
             } else {
+                logger.debug("Right and Forward");
+
                 current.turnRight();
                 current.moveForward();
+
                 path.append('R');
                 path.append('F');
             }

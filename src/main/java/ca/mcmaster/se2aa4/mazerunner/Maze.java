@@ -144,6 +144,7 @@ public class Maze {
      * @return True if the path is correct, false otherwise.
      */
     public boolean checkPath(String path){
+        logger.info("***Checking Path");
         return checkPathBoth(path, this.exit, this.entry, Orientation.WEST) || checkPathBoth(path, this.entry, this.exit, Orientation.EAST);
     }
 
@@ -157,7 +158,6 @@ public class Maze {
      * @return True if the path is correct, false otherwise.
      */
     public boolean checkPathBoth(String path, Coordinate start, Coordinate end, Orientation orientation){
-        logger.debug("Check Path");
         Coordinate check = new Coordinate(start.getX(), start.getY(), orientation);
 
         return movementCheck(path, check) && (check.getX() == end.getX() && check.getY() == end.getY());
@@ -183,11 +183,12 @@ public class Maze {
                 cords.moveForward();
     
                 if(cords.getX() < 0 || cords.getX() >= getWidth() || cords.getY() < 0 || cords.getY() >= getLength()){
-                    System.out.println("Out of bounds");
+                    logger.warn("Out of bounds");
                     return false;
                 }
     
                 if(!isOpen(cords)){
+                    logger.warn("Hit a wall");
                     return false;
                 }
             }         

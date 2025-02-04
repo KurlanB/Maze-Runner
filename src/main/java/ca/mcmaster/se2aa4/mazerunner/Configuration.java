@@ -47,12 +47,14 @@ public class Configuration {
 
             } else if(cmd.hasOption("p") && cmd.getOptionValue("p") == null){
                 logger.warn("PATH NOT COMPUTED");
-                System.out.println("No path was inputted");
+                System.out.println("No path inputted");
 
             } else {
                 logger.info("**** Computing path");
                 MazeRunner runner = new RightHandRule();
                 String pathFound = runner.escapeMaze(maze);
+
+                logger.info("**** Path found");
                 System.out.println(cleanPrint(pathFound));
             }
             
@@ -69,7 +71,7 @@ public class Configuration {
      * @return The command line object.
      * @throws Exception If an error occurs while parsing the command line arguments.
      */
-    public CommandLine setupOptions(String[] args) throws Exception{
+    private CommandLine setupOptions(String[] args) throws Exception{
         //Parsing options
         Options options = new Options();
         options.addOption("i", true, "Input file of maze selected");
@@ -95,12 +97,17 @@ public class Configuration {
      * @return The cleaned path.
      */
     public String cleanRead(String path){
+        logger.info("**** Cleaning path input");
+
         StringBuilder cleanPath = new StringBuilder();
         char[] charPath = path.toUpperCase().replaceAll(" ", "").toCharArray();
         
         for(int i = 0; i < charPath.length; i++){
+            logger.debug(charPath[i]);
+
             if(i == charPath.length - 1){
                 cleanPath.append(charPath[i]);
+
             } else if(Character.isDigit(charPath[i]) && Character.isDigit(charPath[i+1])){
                 StringBuilder number = new StringBuilder();
 
@@ -112,16 +119,19 @@ public class Configuration {
                 for(int j = 0; j < Integer.parseInt(number.toString()); j++){
                     cleanPath.append(charPath[i]);
                 }
+
             } else if(Character.isLetter(charPath[i+1]) && Character.isDigit(charPath[i])){
                 for(int j = 0; j < Character.getNumericValue(charPath[i]); j++){
                     cleanPath.append(charPath[i+1]);
                 }
                 i++;
+
             } else {
                 cleanPath.append(charPath[i]);
             }
+            logger.debug(cleanPath.toString());
         }
-
+        
         logger.debug(cleanPath.toString());
         return cleanPath.toString();
     }
@@ -133,12 +143,17 @@ public class Configuration {
      * @return The cleaned path.
      */
     public String cleanPrint(String solvedPath){
+        logger.info("**** Cleaning path output");
+
         StringBuilder cleanPath = new StringBuilder();
         char[] charPath = solvedPath.toCharArray();
         
         for(int i = 0; i < charPath.length; i++){
+            logger.debug(charPath[i]);
+
             if(i == charPath.length - 1){
                 cleanPath.append(charPath[i]);
+
             } else {
                 if(charPath[i] == charPath[i+1]){
                     int count = 1;
@@ -147,6 +162,7 @@ public class Configuration {
                     while(i < charPath.length - 1){
                         if(charPath[i+1] != commonChar){
                             break;
+
                         } else if(charPath[i+1] == commonChar){
                             count++;
                             i++;
@@ -154,6 +170,7 @@ public class Configuration {
                     }
 
                     cleanPath.append(count + "" + commonChar + " ");
+
                 } else {
                     cleanPath.append(charPath[i] + " ");
                 }
