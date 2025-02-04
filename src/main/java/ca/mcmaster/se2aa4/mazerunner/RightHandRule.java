@@ -25,7 +25,7 @@ public class RightHandRule implements MazeRunner{
          */
 
         // Initialize the Maze runner
-        logger.info("**** Start running through the maze");
+        logger.info("**** Running through maze with the Right Hand Rule algorithm");
         StringBuilder path = new StringBuilder();
         Coordinate current = maze.getEntry();
 

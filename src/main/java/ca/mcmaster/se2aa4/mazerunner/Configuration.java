@@ -35,6 +35,7 @@ public class Configuration {
                 logger.info("**** Verifying path");
                 String path = cmd.getOptionValue("p");
 
+                //Path verification
                 boolean isvalid = maze.checkPath(cleanRead(path));
 
                 if(isvalid){
@@ -46,14 +47,17 @@ public class Configuration {
                 }
 
             } else if(cmd.hasOption("p") && cmd.getOptionValue("p") == null){
+                //No path inputted
                 logger.warn("PATH NOT COMPUTED");
                 System.out.println("No path inputted");
 
             } else {
+                //Computing path using Right Hand Rule
                 logger.info("**** Computing path");
                 MazeRunner runner = new RightHandRule();
                 String pathFound = runner.escapeMaze(maze);
 
+                //Printing path
                 logger.info("**** Path found");
                 System.out.println(cleanPrint(pathFound));
             }
@@ -100,27 +104,32 @@ public class Configuration {
         logger.info("**** Cleaning path input");
 
         StringBuilder cleanPath = new StringBuilder();
-        char[] charPath = path.toUpperCase().replaceAll(" ", "").toCharArray();
+        char[] charPath = path.toUpperCase().replaceAll(" ", "").toCharArray(); // Remove spaces and convert to uppercase
         
         for(int i = 0; i < charPath.length; i++){
             logger.debug(charPath[i]);
 
+            //Last character
             if(i == charPath.length - 1){
                 cleanPath.append(charPath[i]);
 
             } else if(Character.isDigit(charPath[i]) && Character.isDigit(charPath[i+1])){
+                //Numbers over one digit
                 StringBuilder number = new StringBuilder();
 
+                //Counting the number of digits
                 while(Character.isDigit(charPath[i])){
                     number.append(charPath[i]);
                     i++;
                 }
 
+                //Appending the character the number of times
                 for(int j = 0; j < Integer.parseInt(number.toString()); j++){
                     cleanPath.append(charPath[i]);
                 }
 
-            } else if(Character.isLetter(charPath[i+1]) && Character.isDigit(charPath[i])){
+            } else if(Character.isLetter(charPath[i+1]) && Character.isDigit(charPath[i])){ //Single digit number
+                //Append character number of times
                 for(int j = 0; j < Character.getNumericValue(charPath[i]); j++){
                     cleanPath.append(charPath[i+1]);
                 }
@@ -147,18 +156,21 @@ public class Configuration {
 
         StringBuilder cleanPath = new StringBuilder();
         char[] charPath = solvedPath.toCharArray();
-        
+
         for(int i = 0; i < charPath.length; i++){
             logger.debug(charPath[i]);
 
+            //Last character
             if(i == charPath.length - 1){
                 cleanPath.append(charPath[i]);
 
             } else {
+                //Checking for repeating characters
                 if(charPath[i] == charPath[i+1]){
                     int count = 1;
                     char commonChar = charPath[i];
 
+                    //Counting the number of repeating characters
                     while(i < charPath.length - 1){
                         if(charPath[i+1] != commonChar){
                             break;
@@ -168,7 +180,7 @@ public class Configuration {
                             i++;
                         }
                     }
-
+                    
                     cleanPath.append(count + "" + commonChar + " ");
 
                 } else {

@@ -22,7 +22,7 @@ public class Coordinate {
     }
 
     /**
-     * Constructor to initialize the coordinate with given x and y values.
+     * Constructor to initialize the coordinate with given x and y values and an orientation.
      * 
      * @param x The x coordinate.
      * @param y The y coordinate.

@@ -36,6 +36,7 @@ public class Maze {
         while ((line = reader.readLine()) != null) {
             ArrayList<Boolean> row = new ArrayList<>();
 
+            //Adding maze to 2d ArrayList
             logger.debug("Reading lines of maze");
             for (int idx = 0; idx < line.length(); idx++) {
                 if (line.charAt(idx) == '#') {
@@ -182,11 +183,13 @@ public class Maze {
             }else if(c == 'F'){  
                 cords.moveForward();
     
+                //Checking if the cords are out of bounds
                 if(cords.getX() < 0 || cords.getX() >= getWidth() || cords.getY() < 0 || cords.getY() >= getLength()){
                     logger.warn("Out of bounds");
                     return false;
                 }
-    
+                
+                //Checking if the cords hit a wall
                 if(!isOpen(cords)){
                     logger.warn("Hit a wall");
                     return false;
