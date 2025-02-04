@@ -194,6 +194,9 @@ public class Maze {
                     logger.warn("Hit a wall");
                     return false;
                 }
+            } else {
+                logger.warn("Invalid character");
+                return false;
             }         
         }
         return true;
