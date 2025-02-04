@@ -65,7 +65,7 @@ public class Maze {
      * 
      * @return The coordinate of the entry point.
      */
-    public Coordinate findEntry() throws Exception{
+    private Coordinate findEntry() throws Exception{
         for(int i = 0; i < getLength(); i++){
             Coordinate current = new Coordinate(0, i);
             if(isOpen(current)){
@@ -90,7 +90,7 @@ public class Maze {
      * 
      * @return The coordinate of the exit point.
      */
-    public Coordinate findExit() throws Exception{
+    private Coordinate findExit() throws Exception{
         for(int i = 0; i < getLength(); i++){
             Coordinate current = new Coordinate(getWidth() - 1, i);
             if(isOpen(current)){
@@ -158,7 +158,7 @@ public class Maze {
      * @param orientation The orientation of the start coordinate.
      * @return True if the path is correct, false otherwise.
      */
-    public boolean checkPathBoth(String path, Coordinate start, Coordinate end, Orientation orientation){
+    private boolean checkPathBoth(String path, Coordinate start, Coordinate end, Orientation orientation){
         Coordinate check = new Coordinate(start.getX(), start.getY(), orientation);
 
         return movementCheck(path, check) && (check.getX() == end.getX() && check.getY() == end.getY());
@@ -172,7 +172,7 @@ public class Maze {
      * @param orientation The orientation to check.
      * @return True if the movement is valid, false otherwise.
      */
-    public boolean movementCheck(String path, Coordinate cords){
+    private boolean movementCheck(String path, Coordinate cords){
         for(Character c : path.toCharArray()){
             logger.debug(c);
 
