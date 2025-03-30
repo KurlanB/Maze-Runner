@@ -1,5 +1,8 @@
 # Assignment A1 - Maze Runner
 
+- **Student Author:** Kurlan Beeharry
+- **Course:** Software Engineering Design, 2AA4
+#
 - Original author: Dr. [Sébastien Mosser](https://mosser.github.io)
 - Version: 2024.01
 - Context: McMaster University > Engineering > Computing & Software > SFWRENG > 2AA4
