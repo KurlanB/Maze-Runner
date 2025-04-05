@@ -3,6 +3,7 @@ package ca.mcmaster.se2aa4.mazerunner.Map;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import ca.mcmaster.se2aa4.mazerunner.Commands.*;
@@ -20,7 +21,7 @@ public class Maze {
     private static final Logger logger = LogManager.getLogger();
 
     // 2d ArrayList of boolean to store the maze layout, where false represents a wall 
-    private final ArrayList<ArrayList<Boolean>> maze = new ArrayList<ArrayList<Boolean>>();
+    private final List<ArrayList<Boolean>> maze = new ArrayList<ArrayList<Boolean>>();
 
     private final Coordinate entry;
     

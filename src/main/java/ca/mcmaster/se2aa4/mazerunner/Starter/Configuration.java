@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import ca.mcmaster.se2aa4.mazerunner.Map.Maze;
 import ca.mcmaster.se2aa4.mazerunner.Runner.MazeRunner;
 import ca.mcmaster.se2aa4.mazerunner.Runner.RightHandRule;
+import ca.mcmaster.se2aa4.mazerunner.Runner.RunnerFactory;
 
 public class Configuration {
 
@@ -58,7 +59,13 @@ public class Configuration {
             } else {
                 //Computing path using Right Hand Rule
                 logger.info("**** Computing path");
-                MazeRunner runner = new RightHandRule();
+
+                //Sample String for default Right Hand Rule Algorithm, would be replace with command line input
+                String algorithm = "RHR";    
+
+                RunnerFactory factory = new RunnerFactory();
+                MazeRunner runner = factory.getRunner(algorithm);
+                
                 String pathFound = runner.escapeMaze(maze);
 
                 //Printing path
