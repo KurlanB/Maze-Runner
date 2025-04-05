@@ -3,9 +3,9 @@ package ca.mcmaster.se2aa4.mazerunner.Runner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ca.mcmaster.se2aa4.mazerunner.Commands.*;
 import ca.mcmaster.se2aa4.mazerunner.Map.Coordinate;
 import ca.mcmaster.se2aa4.mazerunner.Map.Maze;
-
 /**
  * The RightHandRule class implements the MazeRunner interface and provides
  * an algorithm to escape the maze using the right-hand rule.
@@ -30,7 +30,7 @@ public class RightHandRule implements MazeRunner{
 
         // Initialize the Maze runner
         logger.info("**** Running through maze with the Right Hand Rule algorithm");
-        StringBuilder path = new StringBuilder();
+        CommandManager commandManager = new CommandManager();
         Coordinate current = maze.getEntry();
 
         // While the runner has not reached the exit
@@ -51,28 +51,20 @@ public class RightHandRule implements MazeRunner{
             if(!maze.isOpen(rightHand)){
                 if(maze.isOpen(front)){
                     logger.debug("Forward");
-                    path.append('F');
-
-                    current.moveForward();
+                    commandManager.executeCommand(new MoveForwardCommand(current));
                 } else {
                     logger.debug("Left");
-                    current.turnLeft();
-
-                    path.append('L');
+                    commandManager.executeCommand(new TurnLeftCommand(current));
                 }
             } else {
                 logger.debug("Right and Forward");
 
-                current.turnRight();
-                current.moveForward();
-
-                path.append('R');
-                path.append('F');
+                commandManager.executeCommand(new RightAndForwardCommand(current));
             }
 
-            logger.debug(path.toString());
+            logger.debug(commandManager.toString());
         }
         
-        return path.toString();
+        return commandManager.toString();
     }
 }

@@ -3,6 +3,10 @@ package ca.mcmaster.se2aa4.mazerunner.Map;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import ca.mcmaster.se2aa4.mazerunner.Commands.*;
+
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -173,16 +177,20 @@ public class Maze {
      * @return True if the movement is valid, false otherwise.
      */
     private boolean movementCheck(String path, Coordinate cords){
+        CommandManager commandManager = new CommandManager();
+
+        Map<Character, Command> commandMap = new HashMap<>();
+        commandMap.put('F', new MoveForwardCommand(cords));
+        commandMap.put('R', new TurnRightCommand(cords));
+        commandMap.put('L', new TurnLeftCommand(cords));
+        
         for(Character c : path.toCharArray()){
             logger.debug(c);
+            Command command = commandMap.get(c);
 
-            if(c == 'R'){
-                cords.turnRight();
-            }else if(c == 'L'){
-                cords.turnLeft();
-            }else if(c == 'F'){  
-                cords.moveForward();
-    
+            if(command != null){
+                commandManager.executeCommand(command);
+
                 //Checking if the cords are out of bounds
                 if(cords.getX() < 0 || cords.getX() >= getWidth() || cords.getY() < 0 || cords.getY() >= getLength()){
                     logger.warn("Out of bounds");
