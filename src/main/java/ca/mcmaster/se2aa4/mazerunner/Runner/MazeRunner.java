@@ -1,4 +1,6 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.Runner;
+
+import ca.mcmaster.se2aa4.mazerunner.Map.Maze;
 
 /*
  * Interface to define the method for the maze runner to solve the maze.

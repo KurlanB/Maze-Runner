@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.Starter;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -7,6 +7,10 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import ca.mcmaster.se2aa4.mazerunner.Map.Maze;
+import ca.mcmaster.se2aa4.mazerunner.Runner.MazeRunner;
+import ca.mcmaster.se2aa4.mazerunner.Runner.RightHandRule;
 
 public class Configuration {
 

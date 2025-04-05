@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.Map;
 
 /**
  * The Orientation enum represents the four directions and methods when turning right or left.

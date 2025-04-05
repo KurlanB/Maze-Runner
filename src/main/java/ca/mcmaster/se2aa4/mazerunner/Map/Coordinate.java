@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.Map;
 
 /*
  * Coordinate class to help track the position of the runner, entry and exit in the maze.

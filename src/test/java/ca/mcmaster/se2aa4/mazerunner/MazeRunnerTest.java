@@ -4,6 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ca.mcmaster.se2aa4.mazerunner.Map.Maze;
+import ca.mcmaster.se2aa4.mazerunner.Runner.MazeRunner;
+import ca.mcmaster.se2aa4.mazerunner.Runner.RightHandRule;
+
 public class MazeRunnerTest {
     private MazeRunner mazeRunner;
     private Maze maze;

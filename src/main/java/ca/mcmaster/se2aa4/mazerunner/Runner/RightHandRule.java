@@ -1,7 +1,11 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.Runner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import ca.mcmaster.se2aa4.mazerunner.Map.Coordinate;
+import ca.mcmaster.se2aa4.mazerunner.Map.Maze;
+
 /**
  * The RightHandRule class implements the MazeRunner interface and provides
  * an algorithm to escape the maze using the right-hand rule.
