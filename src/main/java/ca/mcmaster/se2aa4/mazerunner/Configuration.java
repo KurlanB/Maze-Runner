@@ -191,6 +191,6 @@ public class Configuration {
             logger.debug(i);
         }
         
-        return cleanPath.toString();
+        return cleanPath.toString().trim();
     }
 }
